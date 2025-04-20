@@ -6,19 +6,6 @@ const MP3Uploader = () => {
   const handleChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setFileName(e.target.files[0].name);
-                    reader.readAsArrayBuffer(mp3File);
-                  });
-                  response = await axios.post(API_OPTIONS.DEEP_SPEECH.url, audioBlob, {
-                    headers: {
-                      ...API_OPTIONS.DEEP_SPEECH.headers
-                    }
-                  });
-                }
-              }
-            }
-          }
-        }
-      }
       
       setTxtResult(response.data.transcript || response.data.text);
       setIsConverting(false);
