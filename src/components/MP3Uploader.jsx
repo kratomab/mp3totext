@@ -15,11 +15,36 @@ export default function MP3Uploader() {
     
     setIsConverting(true);
     
-    // Simulasi konversi MP3 ke TXT
-    setTimeout(() => {
-      setTxtResult(`Ini adalah contoh hasil konversi dari ${mp3File.name}\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.`);
+    try {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const audioBlob = new Blob([mp3File], { type: 'audio/mp3' });
+      const audioUrl = URL.createObjectURL(audioBlob);
+      
+      const audioElement = new Audio(audioUrl);
+      const recognizer = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognizer.lang = 'id-ID';
+      recognizer.interimResults = false;
+      
+      recognizer.onresult = (event) => {
+        const transcript = Array.from(event.results)
+          .map(result => result[0])
+          .map(result => result.transcript)
+          .join('\n');
+        setTxtResult(transcript);
+        setIsConverting(false);
+      };
+      
+      recognizer.onerror = (event) => {
+        setTxtResult('Error: ' + event.error);
+        setIsConverting(false);
+      };
+      
+      recognizer.start();
+      audioElement.play();
+    } catch (error) {
+      setTxtResult('Error: Browser tidak mendukung Web Speech API');
       setIsConverting(false);
-    }, 2000);
+    }
   };
 
   return (
