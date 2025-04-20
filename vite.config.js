@@ -7,5 +7,10 @@ import { defineConfig } from 'vite'
       server: {
         port: 3000, // Anda bisa mengganti port jika diperlukan
         open: true // Otomatis membuka browser saat server dimulai
+      },
+      build: {
+        rollupOptions: {
+          external: ['axios']
+        }
       }
     })

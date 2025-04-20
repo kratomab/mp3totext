@@ -49,6 +49,27 @@ const API_OPTIONS = {
     headers: {
       'Content-Type': 'audio/wav'
     }
+  },
+  WHISPER_CPP: {
+    url: process.env.REACT_APP_WHISPER_CPP_URL || 'https://whisper.ggerganov.com',
+    name: 'Whisper.cpp',
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  },
+  COQUI: {
+    url: process.env.REACT_APP_COQUI_API_URL || 'https://coqui.ai',
+    name: 'Coqui STT',
+    headers: {
+      'Authorization': `Bearer ${process.env.REACT_APP_COQUI_KEY}`
+    }
+  },
+  NETLIFY_EDGE: {
+    url: process.env.REACT_APP_NETLIFY_EDGE_URL || '/.netlify/functions/transcribe',
+    name: 'Netlify Edge Function',
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
   }
 };
 
